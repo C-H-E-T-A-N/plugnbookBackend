@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes 
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.settings import api_settings
 
 @api_view(['POST'])
 @csrf_exempt
@@ -25,6 +26,9 @@ def userRegister(request):
             return JsonResponse({'error': 'Email and password are required','success':False}, status=400)
     else:
         return JsonResponse({'error': 'Only POST method allowed','success':False}, status=405)
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 @api_view(['POST'])
 @csrf_exempt
@@ -47,8 +51,10 @@ def userLogin(request):
         user = authenticate(request, username=user.username, password=password)
         
         if user is not None:
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
             login(request, user)
-            return JsonResponse({'success': True, 'message': 'Login successful'})
+            return JsonResponse({'success': True, 'message': 'Login successful','token':token})
         else:
             return JsonResponse({'success': False, 'error': 'Invalid email or password'}, status=400)
     else:
