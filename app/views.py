@@ -1,12 +1,10 @@
-from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view, permission_classes 
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
 from rest_framework_jwt.settings import api_settings
+import razorpay
 
 @api_view(['POST'])
 @csrf_exempt
@@ -60,9 +58,6 @@ def userLogin(request):
     else:
         return JsonResponse({'success': False, 'error': 'Only POST requests are allowed'}, status=405)
 
-from unicodedata import name
-from django.shortcuts import render
-import razorpay
 
 razorpay_client = razorpay.Client(auth=("rzp_test_uimqIRUwRnutpf", "hAic5Kp0zOpCkMUWLqpE8etL"))
 
