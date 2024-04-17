@@ -7,4 +7,5 @@ urlpatterns = [
     path("login", views.userLogin, name="login"),
     path("tokenfee", views.Token_Fee, name="token fee for slots"),
     path("callback", views.order_callback, name="callback for razorpay"),
+    path("email", views.email, name="email"),
 ]

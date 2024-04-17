@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework_jwt.settings import api_settings
 import razorpay
+from django.core.mail import send_mail
+from django.conf import settings
 
 @api_view(['POST'])
 @csrf_exempt
@@ -101,6 +103,11 @@ def order_callback(request):
         if "razorpay_signature" in request.data:
             payment_verification = razorpay_client.utility.verify_payment_signature(params_dict)
             if payment_verification:
+                subject = "Token"
+                message = "Token amount: ₹ 50\nSlot: On x/x/x at 5:00 - 6:00 PM\nThank You for using PlugNbook!\nRegards\nPlugNbook"
+                from_email = settings.EMAIL_HOST_USER
+                recipient = ["chetanshrma02@gmail.com"]
+                send_mail(subject, message, from_email, recipient, fail_silently=False)
                 return JsonResponse({"res":"success", "success":True})
                 # Logic to perform is payment is successful
             else:
@@ -108,3 +115,22 @@ def order_callback(request):
                 # Logic to perform is payment is unsuccessful
         else:
             return JsonResponse({"res":"failed2"})
+
+@csrf_exempt
+@api_view(['POST'])
+def email(request):
+    if request.method == "POST":
+        # subject = "Invoice for Your Recent Payment"
+        # message = f"Dear User,\n\nHere is the invoice for your recent payment:\n\nInvoice Number: '1'\nAmount: '50'\n\nThank you for your payment!\n\nSincerely,\nYour Company"
+        # from_email = settings.EMAIL_HOST_USER
+        # recipient = ['hawk.predator07@gmail.com']
+        # send_mail(subject, message, from_email, recipient)
+        subject = "Token"
+        message = "Token amount: ₹ 50\nSlot: On x/x/x at 5:00 - 6:00 PM\nThank You for using PlugNbook!\nRegards\nPlugNbook"
+        from_email = settings.EMAIL_HOST_USER
+        recipient = ["chetanshrma02@gmail.com"]
+        send_mail(subject, message, from_email, ["chetanshrma02@gmail.com"],fail_silently=False,)
+        return JsonResponse({"res":"success", "success":True})
+    else:
+        return JsonResponse({"res":"failed"})
+
