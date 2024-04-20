@@ -86,10 +86,10 @@ WSGI_APPLICATION = 'plugnbookBackend.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'eukpzmcb',
-       'USER': 'eukpzmcb',
-       'PASSWORD': 'xCAfUJ2OkDeH3bCK74s5Z6JjdsOOMhP6',
-       'HOST': 'otto.db.elephantsql.com',
+       'NAME': 'pulgnbook',
+       'USER': 'postgres',
+       'PASSWORD': 'chetan@123',
+       'HOST': 'localhost',
        'PORT': '5432',
    }
 }
