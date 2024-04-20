@@ -5,8 +5,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 class ChargingStation(models.Model):
     name = models.CharField(max_length=100)
+    brand = models.CharField(max_length=100, default='')
+    city = models.CharField(max_length=100, default='')
+    state = models.CharField(max_length=100, default='')
     location = models.CharField(max_length=255)
-    available_slots = models.PositiveIntegerField(default=0)
+    available_chargers = models.PositiveIntegerField(default=0)
     # Add other fields as per your requirements
 
     def __str__(self):

@@ -69,6 +69,7 @@ def Token_Fee(request):
     if request.method == "POST":
 
         print("", request.POST['price'])
+        print("", request.POST)
         amount = int(request.POST['price'])
         product_name = request.POST['product_name']
 
